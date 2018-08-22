@@ -61,5 +61,16 @@ namespace PencilDurability.Tests
             sheet = pencil.Erase(eraseText, sheet);
             Assert.AreEqual("It was the best of      , it was the blurst of      .", sheet);
         }
+        
+        [TestMethod]
+        public void WhenPencilGivenNonblankPaperAndTextToEraseWithNoMatch_PaperIsUnchanged()
+        {
+            string originalText = "It was the best of times, it was the blurst of times.";
+            string eraseText = "days";
+            sheet = originalText;
+
+            sheet = pencil.Erase(eraseText, sheet);
+            Assert.AreEqual(originalText, sheet);
+        }
     }
 }

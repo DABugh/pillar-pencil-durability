@@ -13,8 +13,13 @@ namespace PencilDurability
         public string Erase(string textToErase, string sheet)
         {
             int pos = sheet.LastIndexOf(textToErase);
-            string replacementSpace = new String(' ', textToErase.Length);
-            return sheet.Substring(0, pos) + replacementSpace + sheet.Substring(pos + textToErase.Length);
+            if (pos >= 0)
+            {
+                string replacementSpace = new String(' ', textToErase.Length);
+                sheet = sheet.Substring(0, pos) + replacementSpace + sheet.Substring(pos + textToErase.Length);
+            }
+            
+            return sheet;
         }
     }
 }
