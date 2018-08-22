@@ -13,13 +13,13 @@ namespace PencilDurability.Tests
         // so that I can better remember my thoughts
 
         [TestMethod]
-        public void WhenPencilGivenPaperAndTextToWrite_PaperContainsText()
+        public void WhenPencilGivenBlankPaperAndTextToWrite_PaperContainsText()
         {
             Pencil pencil = new Pencil();
             string sheet = String.Empty;
             string textToWrite = "It was the best of times";
 
-            pencil.Write(textToWrite, out sheet);
+            sheet = pencil.Write(textToWrite, sheet);
             Assert.AreEqual(textToWrite, sheet);
         }
     }

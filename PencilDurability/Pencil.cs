@@ -2,9 +2,9 @@ namespace PencilDurability
 {
     public class Pencil
     {
-        public void Write(string textToWrite, out string sheet)
+        public string Write(string textToWrite, string sheet)
         {
-            sheet = textToWrite;
+            return textToWrite;
         }
     }
 }
