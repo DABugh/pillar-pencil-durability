@@ -22,20 +22,34 @@ namespace PencilDurability
             return sheet;
         }
 
-        public string Overwrite(string textToWrite, string sheet, int pos)
+        public string Overwrite(string requestedText, string sheet, int pos)
         {
-            string oldString = sheet.Substring(pos, textToWrite.Length);
+            char[] requestedTextChars = requestedText.ToCharArray();
+            char[] oldTextChars = sheet.Substring(pos, requestedText.Length).ToCharArray();
+            char[] newTextChars = new char[requestedText.Length];
 
-            //White space - overwrite
-            if(String.IsNullOrWhiteSpace(oldString))
+            for (int i=0; i<newTextChars.Length; i++)
             {
-                sheet = sheet.Substring(0, pos) + textToWrite + sheet.Substring(pos + textToWrite.Length);
+                if (requestedTextChars[i] == ' ' && oldTextChars[i] == ' ')
+                {
+                    newTextChars[i] = ' ';
+                }
+                else if (requestedTextChars[i] == ' ' && oldTextChars[i] != ' ')
+                {
+                    newTextChars[i] = oldTextChars[i];
+                }
+                else if (requestedTextChars[i] != ' ' && oldTextChars[i] == ' ')
+                {
+                    newTextChars[i] = requestedTextChars[i];
+                }
+                else if (requestedTextChars[i] != ' ' && oldTextChars[i] != ' ')
+                {
+                    newTextChars[i] = '@';
+                }
             }
-            //Written characters - convert to gibberish ('@')
-            else
-            {
-                sheet = sheet.Substring(0, pos) + new String('@', textToWrite.Length) + sheet.Substring(pos + textToWrite.Length);
-            }
+
+            string newText = new String(newTextChars);
+            sheet = sheet.Substring(0, pos) + newText + sheet.Substring(pos + requestedText.Length);
 
             return sheet;
         }

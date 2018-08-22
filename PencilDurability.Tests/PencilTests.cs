@@ -101,5 +101,20 @@ namespace PencilDurability.Tests
 
             Assert.AreEqual("It was the best of times, it was the @@@@@t of times.", sheet);
         }
+
+        [TestMethod]
+        public void WhenPencilGivenNonblankPaperAndTextToOverwriteAtPosition_PaperContainsTextAndCollisions()
+        {
+            string originalText = "It was the best of times, it was the blurst of times.";
+            sheet = originalText;
+
+            sheet = pencil.Overwrite("super amazing", sheet, 33);
+
+            //Requirements state that writing a character over a space does not cause a collision,
+            //  but do not specify expectations when writing a space over an existing character.
+            //  This test assumes no collision (see 'l' in expected result), as that reflects
+            //  real-world outcome. In a professional environment, requirement should be verified.
+            Assert.AreEqual("It was the best of times, it was @@@e@l@@@@i@@ times.", sheet);
+        }
     }
 }
