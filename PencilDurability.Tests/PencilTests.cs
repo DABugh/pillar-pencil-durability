@@ -7,6 +7,16 @@ namespace PencilDurability.Tests
     [TestClass]
     public class PencilTests
     {
+        private Pencil pencil;
+        private string sheet;
+
+        [TestInitialize()]
+        public void Initialize()
+        {
+            pencil = new Pencil();
+            sheet = String.Empty;
+        }
+
         // WRITE
         // As a writer
         // I want to be able use a pencil to write text on a sheet of paper
@@ -15,8 +25,6 @@ namespace PencilDurability.Tests
         [TestMethod]
         public void WhenPencilGivenBlankPaperAndTextToWrite_PaperContainsText()
         {
-            Pencil pencil = new Pencil();
-            string sheet = String.Empty;
             string textToWrite = "It was the best of times";
 
             sheet = pencil.Write(textToWrite, sheet);
@@ -26,10 +34,9 @@ namespace PencilDurability.Tests
         [TestMethod]
         public void WhenPencilGivenNonblankPaperAndTextToWrite_PaperContainsOriginalAndAppendedText()
         {
-            Pencil pencil = new Pencil();
             string originalText = "It was the best of times";
             string textToWrite = ", it was the blurst of times.";
-            string sheet = originalText;
+            sheet = originalText;
 
             sheet = pencil.Write(textToWrite, sheet);
             Assert.AreEqual(originalText + textToWrite, sheet);
