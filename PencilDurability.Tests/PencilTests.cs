@@ -90,5 +90,16 @@ namespace PencilDurability.Tests
 
             Assert.AreEqual("It was the best of times, but it was the blurst of times.", sheet);
         }
+
+        [TestMethod]
+        public void WhenPencilGivenNonblankPaperAndTextToOverwriteAtPosition_PaperContainsCollisionsInsteadOfCharactersAtPosition()
+        {
+            string originalText = "It was the best of times, it was the blurst of times.";
+            sheet = originalText;
+
+            sheet = pencil.Overwrite("worst", sheet, 37);
+
+            Assert.AreEqual("It was the best of times, it was the @@@@@t of times.", sheet);
+        }
     }
 }

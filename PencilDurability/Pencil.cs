@@ -24,7 +24,18 @@ namespace PencilDurability
 
         public string Overwrite(string textToWrite, string sheet, int pos)
         {
-            sheet = sheet.Substring(0, pos) + textToWrite + sheet.Substring(pos + textToWrite.Length);
+            string oldString = sheet.Substring(pos, textToWrite.Length);
+
+            //White space - overwrite
+            if(String.IsNullOrWhiteSpace(oldString))
+            {
+                sheet = sheet.Substring(0, pos) + textToWrite + sheet.Substring(pos + textToWrite.Length);
+            }
+            //Written characters - convert to gibberish ('@')
+            else
+            {
+                sheet = sheet.Substring(0, pos) + new String('@', textToWrite.Length) + sheet.Substring(pos + textToWrite.Length);
+            }
 
             return sheet;
         }
