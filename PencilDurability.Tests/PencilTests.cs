@@ -22,5 +22,17 @@ namespace PencilDurability.Tests
             sheet = pencil.Write(textToWrite, sheet);
             Assert.AreEqual(textToWrite, sheet);
         }
+
+        [TestMethod]
+        public void WhenPencilGivenNonblankPaperAndTextToWrite_PaperContainsOriginalAndAppendedText()
+        {
+            Pencil pencil = new Pencil();
+            string originalText = "It was the best of times";
+            string textToWrite = ", it was the blurst of times.";
+            string sheet = originalText;
+
+            sheet = pencil.Write(textToWrite, sheet);
+            Assert.AreEqual(originalText + textToWrite, sheet);
+        }
     }
 }
