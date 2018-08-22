@@ -19,8 +19,8 @@ namespace PencilDurability.Tests
 
         // WRITE
         // As a writer
-        // I want to be able use a pencil to write text on a sheet of paper
-        // so that I can better remember my thoughts
+        //  I want to be able use a pencil to write text on a sheet of paper
+        //  so that I can better remember my thoughts
 
         [TestMethod]
         public void WhenPencilGivenBlankPaperAndTextToWrite_PaperContainsText()
@@ -40,6 +40,26 @@ namespace PencilDurability.Tests
 
             sheet = pencil.Write(textToWrite, sheet);
             Assert.AreEqual(originalText + textToWrite, sheet);
+        }
+
+
+        // ERASE
+        // As a writer
+        //  I want to be able to erase previously written text
+        //  so that I can remove my mistakes
+
+        [TestMethod]
+        public void WhenPencilGivenNonblankPaperAndTextToErase_PaperContainsBlankSpacesAtLastTextPosition()
+        {
+            string originalText = "It was the best of times, it was the blurst of times.";
+            string eraseText = "times";
+            sheet = originalText;
+
+            sheet = pencil.Erase(eraseText, sheet);
+            Assert.AreEqual("It was the best of times, it was the blurst of      .", sheet);
+
+            sheet = pencil.Erase(eraseText, sheet);
+            Assert.AreEqual("It was the best of      , it was the blurst of      .", sheet);
         }
     }
 }
