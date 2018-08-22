@@ -72,5 +72,23 @@ namespace PencilDurability.Tests
             sheet = pencil.Erase(eraseText, sheet);
             Assert.AreEqual(originalText, sheet);
         }
+
+
+        // EDIT
+        // As a writer
+        //  I want to be able to edit previously written text
+        //  so that I can change my writing without starting over
+
+        [TestMethod]
+        public void WhenPencilGivenNonblankPaperAndTextToOverwriteAtPosition_PaperContainsOverwriteTextInsteadOfSpacesAtPosition()
+        {
+            string originalText = "It was the best of times,     it was the blurst of times.";
+            sheet = originalText;
+            
+            //Leave one space after comma, overwrite after that
+            sheet = pencil.Overwrite("but", sheet, 26);
+
+            Assert.AreEqual("It was the best of times, but it was the blurst of times.", sheet);
+        }
     }
 }

@@ -18,7 +18,14 @@ namespace PencilDurability
                 string replacementSpace = new String(' ', textToErase.Length);
                 sheet = sheet.Substring(0, pos) + replacementSpace + sheet.Substring(pos + textToErase.Length);
             }
-            
+
+            return sheet;
+        }
+
+        public string Overwrite(string textToWrite, string sheet, int pos)
+        {
+            sheet = sheet.Substring(0, pos) + textToWrite + sheet.Substring(pos + textToWrite.Length);
+
             return sheet;
         }
     }
