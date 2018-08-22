@@ -24,6 +24,11 @@ namespace PencilDurability
 
         public string Overwrite(string requestedText, string sheet, int pos)
         {
+            //TODO: Verify that [pos + requestedText.Length] does not exceed sheet.Length
+            //  If so, must overwrite overlapping portions and append the rest
+            //  If pos > sheet.Length, possibly pad with whitespace -- requirements should be clarified
+            //  As currently written, this scenario will throw an exception
+
             char[] requestedTextChars = requestedText.ToCharArray();
             char[] oldTextChars = sheet.Substring(pos, requestedText.Length).ToCharArray();
             char[] newTextChars = new char[requestedText.Length];
