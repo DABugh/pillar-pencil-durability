@@ -17,9 +17,10 @@ namespace PencilDurability.Tests
         {
             Pencil pencil = new Pencil();
             string sheet = String.Empty;
+            string textToWrite = "It was the best of times";
 
-            pencil.Write("It was the best of times", out sheet);
-            Assert.AreEqual("It was the best of times", sheet);
+            pencil.Write(textToWrite, out sheet);
+            Assert.AreEqual(textToWrite, sheet);
         }
     }
 }
