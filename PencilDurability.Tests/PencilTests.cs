@@ -78,7 +78,18 @@ namespace PencilDurability.Tests
             Assert.AreEqual(defaultDurability - 16, pencil.Durability);
 
             pencil.Write("fun time", sheet, 10);
-            Assert.AreEqual(defaultDurability - 23, pencil.Durability);
+            Assert.AreEqual(defaultDurability - 16 - 7, pencil.Durability);
         }
+
+        [TestMethod]
+        public void WhenPencilSharpnessReachesZero_ItNoLongerDegrades()
+        {
+            pencil = new Pencil(20);
+
+            pencil.Write("A funny thing happened on the way to integration testing.", sheet);
+            Assert.AreEqual(0, pencil.Durability);
+        }
+
+        //TODO: Test that pencil with infinite sharpness will write and sharpness value does not change
     }
 }
