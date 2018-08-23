@@ -15,6 +15,15 @@ namespace PencilDurability.Tests
         //  so that I can better remember my thoughts
 
         [TestMethod]
+        public void WhenPaperInitializedWithText_PaperContainsText()
+        {
+            string textToWrite = "It was the best of times";
+            sheet = new Paper(textToWrite);
+
+            Assert.AreEqual(textToWrite, sheet.Text);
+        }
+
+        [TestMethod]
         public void WhenPaperGivenTextToAppend_PaperContainsText()
         {
             string textToWrite = "It was the best of times";
