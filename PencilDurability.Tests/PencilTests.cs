@@ -8,6 +8,14 @@ namespace PencilDurability.Tests
     public class PencilTests
     {
         private Pencil pencil;
+        private Paper sheet;
+
+        [TestInitialize()]
+        public void Initialize()
+        {
+            sheet = new Paper();
+        }
+
 
         // POINT DEGRADATION
         //  As a pencil manufacturer
@@ -37,7 +45,6 @@ namespace PencilDurability.Tests
         public void WhenPencilWrites_ItLosesItsSharpness()
         {
             pencil = new Pencil(100);
-            Paper sheet = new Paper();
             
             pencil.Write("test", sheet);
             Assert.AreEqual(96, pencil.Durability);
@@ -47,7 +54,6 @@ namespace PencilDurability.Tests
         public void WhenPencilWrites_ItDoesNotLoseItsSharpnessForSpaces()
         {
             pencil = new Pencil(100);
-            Paper sheet = new Paper();
             
             pencil.Write("this is a test", sheet);
             Assert.AreEqual(89, pencil.Durability);
