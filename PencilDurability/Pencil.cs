@@ -99,7 +99,10 @@ namespace PencilDurability
                 charsToErase = -1;
             }
 
-            sheet.Erase(textToErase, charsToErase);
+            if (charsToErase != 0)
+            {
+                sheet.Erase(textToErase, charsToErase);
+            }
 
             return sheet;
         }
