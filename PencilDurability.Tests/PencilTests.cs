@@ -9,12 +9,13 @@ namespace PencilDurability.Tests
     {
         private Pencil pencil;
         private Paper sheet;
+        private int defaultDurability = 100;
 
         [TestInitialize()]
         public void Initialize()
         {
             sheet = new Paper();
-            pencil = new Pencil(100);
+            pencil = new Pencil(defaultDurability);
         }
 
 
@@ -46,31 +47,31 @@ namespace PencilDurability.Tests
         public void WhenPencilWrites_ItLosesItsSharpness()
         {
             pencil.Write("test", sheet);
-            Assert.AreEqual(96, pencil.Durability);
+            Assert.AreEqual(defaultDurability - 4, pencil.Durability);
         }
 
         [TestMethod]
         public void WhenPencilWrites_ItDoesNotLoseItsSharpnessForSpaces()
         {
             pencil.Write("this is a test", sheet);
-            Assert.AreEqual(89, pencil.Durability);
+            Assert.AreEqual(defaultDurability - 11, pencil.Durability);
         }
 
         [TestMethod]
         public void WhenPencilWrites_ItLosesDoubleSharpnessForCapitalLetters()
         {
             pencil.Write("This is a Test", sheet);
-            Assert.AreEqual(87, pencil.Durability);
+            Assert.AreEqual(defaultDurability - 13, pencil.Durability);
         }
 
         [TestMethod]
         public void WhenPencilOverwrites_ItLosesSharpness()
         {
             pencil.Write("This is a new Test", sheet);
-            Assert.AreEqual(84, pencil.Durability);
+            Assert.AreEqual(defaultDurability - 16, pencil.Durability);
 
             pencil.Write("fun time", sheet, 10);
-            Assert.AreEqual(77, pencil.Durability);
+            Assert.AreEqual(defaultDurability - 23, pencil.Durability);
         }
     }
 }
