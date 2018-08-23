@@ -194,5 +194,15 @@ namespace PencilDurability.Tests
             pencil.Erase("changes", sheet);
             Assert.AreEqual("Nothing ever changes", sheet.Text);
         }
+
+        [TestMethod]
+        public void WhenPencilErases_EraserIsReducedByNumOfNonwhitespaceCharacters()
+        {
+            pencil = new Pencil(defaultDurability, defaultLength, 150);
+            sheet = new Paper("Except when they do");
+
+            pencil.Erase("when", sheet);
+            Assert.AreEqual(146, pencil.Eraser);
+        }
     }
 }
