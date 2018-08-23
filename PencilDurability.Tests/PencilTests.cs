@@ -10,12 +10,13 @@ namespace PencilDurability.Tests
         private Pencil pencil;
         private Paper sheet;
         private int defaultDurability = 100;
+        private int defaultLength = 2;
 
         [TestInitialize()]
         public void Initialize()
         {
             sheet = new Paper();
-            pencil = new Pencil(defaultDurability);
+            pencil = new Pencil(defaultDurability, defaultLength);
         }
 
 
@@ -125,5 +126,18 @@ namespace PencilDurability.Tests
             Assert.AreEqual(defaultDurability, pencil.Sharpness);
         }
 
+        [TestMethod]
+        public void WhenPencilIsSharpened_LengthIsReduced()
+        {
+            pencil.Write("Sharpness is getting reduced.", sheet);
+            pencil.Sharpen();
+            Assert.AreEqual(defaultLength - 1, pencil.Length);
+
+            pencil.Write("Sharpness is getting reduced again.", sheet);
+            pencil.Sharpen();
+            Assert.AreEqual(defaultLength - 2, pencil.Length);
+        }
+
+        //TODO: Test Pencil with infinite (default) length
     }
 }

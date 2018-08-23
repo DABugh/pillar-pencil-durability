@@ -8,13 +8,17 @@ namespace PencilDurability
         // Durability cannot be changed after pencil is created
         public int Durability { get; }
         public int Sharpness { get; private set; }
+        public int Length { get; private set; }
 
-        public Pencil(int dur = -1)
+        public Pencil(int dur = -1, int len = -1)
         {
-            //If Durability not specified when Pencil created, assume infinite durability (verify requirements)
+            // If Durability not specified when Pencil created, assume infinite durability (verify requirements)
             Durability = dur;
-            //Assume pencil comes sharpened
+            // Assume pencil comes sharpened
             Sharpness = Durability;
+            // Requirements state that length "should" be specified, so infinite length is probably outside the scope of requirements;
+            //  Including it anyway for consistency... if durability is not specified, length probably won't be either.
+            Length = len;
         }
 
         public Paper Write(string textToWrite, Paper sheet, int pos = -1)
@@ -79,6 +83,7 @@ namespace PencilDurability
         public void Sharpen()
         {
             Sharpness = Durability;
+            Length--;
         }
     }
 }
