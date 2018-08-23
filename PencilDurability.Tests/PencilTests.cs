@@ -83,7 +83,7 @@ namespace PencilDurability.Tests
         }
 
         [TestMethod]
-        public void WhenPencilSharpnessReachesZero_ItNoLongerDegrades()
+        public void WhenPencilSharpnessReachesZero_SharpnessNoLongerDegrades()
         {
             pencil = new Pencil(20);
 
@@ -92,7 +92,7 @@ namespace PencilDurability.Tests
         }
 
         [TestMethod]
-        public void WhenPencilSharpnessReachesZero_ItNoLongerWrites()
+        public void WhenPencilSharpnessReachesZero_PencilNoLongerWrites()
         {
             pencil = new Pencil(20);
 
@@ -136,6 +136,17 @@ namespace PencilDurability.Tests
             pencil.Write("Sharpness is getting reduced again.", sheet);
             pencil.Sharpen();
             Assert.AreEqual(defaultLength - 2, pencil.Length);
+        }
+
+        [TestMethod]
+        public void WhenPencilLengthIsZeroAndIsSharpened_PencilSharpnessRemainsUnchanged()
+        {
+            pencil = new Pencil(100, 0);
+            
+            pencil.Write("Sharpness is in the eye of the beholder.", sheet);
+            pencil.Sharpen();
+            Assert.AreEqual(defaultDurability - 34, pencil.Sharpness);
+
         }
 
         //TODO: Test Pencil with infinite (default) length
