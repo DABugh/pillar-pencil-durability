@@ -67,5 +67,16 @@ namespace PencilDurability.Tests
             pencil.Write("This is a Test", sheet);
             Assert.AreEqual(87, pencil.Durability);
         }
+
+        [TestMethod]
+        public void WhenPencilOverwrites_ItLosesSharpness()
+        {
+            pencil = new Pencil(100);
+            pencil.Write("This is a new Test", sheet);
+            Assert.AreEqual(84, pencil.Durability);
+
+            pencil.Overwrite("fun time", sheet, 10);
+            Assert.AreEqual(77, pencil.Durability);
+        }
     }
 }

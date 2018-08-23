@@ -39,9 +39,24 @@ namespace PencilDurability
             return sheet.Erase(textToErase);
         }
 
-        public Paper Overwrite(string requestedText, Paper sheet, int pos)
+        public Paper Overwrite(string textToWrite, Paper sheet, int pos)
         {
-            return sheet.Overwrite(requestedText, pos);
+            for(int i=0; i<textToWrite.Length; i++)
+            {
+                if (char.IsUpper(textToWrite[i]))
+                {
+                    Durability -= 2;
+                }
+                else if (char.IsWhiteSpace(textToWrite[i]))
+                {
+                    //Do nothing
+                }
+                else
+                {
+                    Durability--;
+                }
+            }
+            return sheet.Overwrite(textToWrite, pos);
         }
     }
 }
