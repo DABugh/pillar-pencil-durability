@@ -80,9 +80,10 @@ namespace PencilDurability
 
         public Paper Erase(string textToErase, Paper sheet)
         {
+            int charsToErase = 0;
             if (Eraser > 0)
             {
-                int charsToErase = textToErase.Replace(" ", String.Empty).Length;
+                charsToErase = textToErase.Replace(" ", String.Empty).Length;
                 if (charsToErase <= Eraser)
                 {
                     Eraser -= charsToErase;
@@ -92,8 +93,13 @@ namespace PencilDurability
                     charsToErase = Eraser;
                     Eraser = 0;
                 }
-                sheet.Erase(textToErase, charsToErase);
             }
+            else if (Eraser == -1)
+            {
+                charsToErase = -1;
+            }
+
+            sheet.Erase(textToErase, charsToErase);
 
             return sheet;
         }

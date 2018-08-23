@@ -238,8 +238,16 @@ namespace PencilDurability.Tests
             Assert.AreEqual(0, pencil.Eraser);
         }
 
-        //TODO: Test that eraser does not drop below 0 and level up to become infinite
-        //TODO: Test that infinite eraser erases infinitely
+        [TestMethod]
+        public void WhenPencilErasesAndEraserIsSetToNegativeOne_CharactersEraseAndEraserIsUnchanged()
+        {
+            pencil = new Pencil(defaultDurability, defaultLength, -1);
+            sheet = new Paper("And then there's magic to defy the laws of thermodynamics");
+            
+            pencil.Erase("the laws of", sheet);
+            Assert.AreEqual("And then there's magic to defy             thermodynamics", sheet.Text);
+            Assert.AreEqual(-1, pencil.Eraser);
+        }
 
 #endregion //Eraser Degradation
     }
