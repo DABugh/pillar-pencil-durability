@@ -67,6 +67,9 @@ namespace PencilDurability
             char[] oldTextChars = Text.Substring(pos, requestedText.Length).ToCharArray();
             char[] newTextChars = new char[requestedText.Length];
 
+            //TODO: This will treat newline characters as written characters, which will overwrite spaces and collide with
+            //  other characters; to properly simulate paper, a newline must be retained in the overwriting text, but this would
+            //  potentially break up words or otherwise alter the intent. Requirements must be clarified and a new test added.
             for (int i=0; i<newTextChars.Length; i++)
             {
                 //Overwrite space with space
