@@ -99,6 +99,14 @@ namespace PencilDurability.Tests
             Assert.AreEqual("A funny thing happened                                   ", sheet.Text);
         }
 
-        //TODO: Test that pencil with infinite sharpness will write and sharpness value does not change
+        [TestMethod]
+        public void WhenPencilHasDurabilityOfNegativeOne_ItWritesEverythingAndDoesNotDegrade()
+        {
+            pencil = new Pencil(-1);
+
+            pencil.Write("A funny thing happened on the way to integration testing.", sheet);
+            Assert.AreEqual(-1, pencil.Durability);
+            Assert.AreEqual("A funny thing happened on the way to integration testing.", sheet.Text);
+        }
     }
 }
