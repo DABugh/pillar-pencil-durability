@@ -149,6 +149,16 @@ namespace PencilDurability.Tests
             Assert.AreEqual(0, pencil.Length);
         }
 
-        //TODO: Test Pencil with infinite (default) length
+        [TestMethod]
+        public void WhenPencilHasLengthOfNegativeOneAndIsSharpened_PencilIsSharpenedAndLengthRemainsNegativeOne()
+        {
+            pencil = new Pencil(defaultDurability, -1);
+            
+            pencil.Write("Sharpness is in the eye of the beholder.", sheet);
+            Assert.AreEqual(defaultDurability - 34, pencil.Sharpness);
+            pencil.Sharpen();
+            Assert.AreEqual(defaultDurability, pencil.Sharpness);
+            Assert.AreEqual(-1, pencil.Length);
+        }
     }
 }

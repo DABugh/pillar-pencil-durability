@@ -82,9 +82,10 @@ namespace PencilDurability
 
         public void Sharpen()
         {
-            if (Length > 0)
+            if (Length > 0 || Length == -1)
             {
                 Sharpness = Durability;
+                if (Length > 0)
                 //Assumes that sharpening an already-sharp pencil still reduces its length
                 Length--;
             }
