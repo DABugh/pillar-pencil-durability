@@ -94,6 +94,17 @@ namespace PencilDurability.Tests
             Assert.AreEqual("It was the be      times, it was the blurst of times.", sheet.Text);
         }
 
+        [TestMethod]
+        public void WhenPaperWithNewlineGivenTextToEraseAndACount_NewlineDoesNotGetCountedOrReplacedWithASpace()
+        {
+            string originalText = "It was the best of times." + System.Environment.NewLine + "It was the blurst of times.";
+            string eraseText = "the best of times." + System.Environment.NewLine + "It was ";
+            sheet = new Paper(originalText);
+
+            sheet.Erase(eraseText, 8);
+            Assert.AreEqual("It was the best of tim   " + System.Environment.NewLine + "       the blurst of times.", sheet.Text);
+        }
+
 #endregion //Erase
 
 #region Edit
