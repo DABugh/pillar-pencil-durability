@@ -31,10 +31,12 @@ namespace PencilDurability
             if (pos >= 0)
             {
                 string replacementText = String.Empty;
+                // Erase entire string
                 if (charsToErase < 0 || charsToErase >= textToErase.Length)
                 {
                     replacementText = new String(' ', textToErase.Length);
                 }
+                // Else, erase one non-whitespace character at a time
                 else
                 {
                     StringBuilder sbTextToErase = new StringBuilder(textToErase);
@@ -67,18 +69,22 @@ namespace PencilDurability
 
             for (int i=0; i<newTextChars.Length; i++)
             {
+                //Overwrite space with space
                 if (requestedTextChars[i] == ' ' && oldTextChars[i] == ' ')
                 {
                     newTextChars[i] = ' ';
                 }
+                //Space does not overwrite character
                 else if (requestedTextChars[i] == ' ' && oldTextChars[i] != ' ')
                 {
                     newTextChars[i] = oldTextChars[i];
                 }
+                //Overwrite space with character
                 else if (requestedTextChars[i] != ' ' && oldTextChars[i] == ' ')
                 {
                     newTextChars[i] = requestedTextChars[i];
                 }
+                //Overwrite character with character: output is gibberish
                 else if (requestedTextChars[i] != ' ' && oldTextChars[i] != ' ')
                 {
                     newTextChars[i] = '@';

@@ -81,6 +81,7 @@ namespace PencilDurability
         public Paper Erase(string textToErase, Paper sheet)
         {
             int charsToErase = 0;
+            //Num of chars to erase is Eraser value or num of written chars in string, whichever is less
             if (Eraser > 0)
             {
                 charsToErase = textToErase.Replace(" ", String.Empty).Length;
@@ -94,6 +95,7 @@ namespace PencilDurability
                     Eraser = 0;
                 }
             }
+            //Infinite eraser
             else if (Eraser == -1)
             {
                 charsToErase = -1;
