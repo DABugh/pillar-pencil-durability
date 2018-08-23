@@ -12,7 +12,7 @@ namespace PencilDurability
             Durability = dur;
         }
 
-        public Paper Write(string textToWrite, Paper sheet)
+        public Paper Write(string textToWrite, Paper sheet, int pos = -1)
         {
             for(int i=0; i<textToWrite.Length; i++)
             {
@@ -29,34 +29,23 @@ namespace PencilDurability
                     Durability--;
                 }
             }
+            
+            if (pos >= 0)
+            {
+                sheet.Overwrite(textToWrite, pos);
+            }
+            else
+            {
+                sheet.Append(textToWrite);
+            }
 
-            return sheet.Append(textToWrite);
+            return sheet;
         }
 
         //Replace the last instance of textToErase with spaces of equal length
         public Paper Erase(string textToErase, Paper sheet)
         {
             return sheet.Erase(textToErase);
-        }
-
-        public Paper Overwrite(string textToWrite, Paper sheet, int pos)
-        {
-            for(int i=0; i<textToWrite.Length; i++)
-            {
-                if (char.IsUpper(textToWrite[i]))
-                {
-                    Durability -= 2;
-                }
-                else if (char.IsWhiteSpace(textToWrite[i]))
-                {
-                    //Do nothing
-                }
-                else
-                {
-                    Durability--;
-                }
-            }
-            return sheet.Overwrite(textToWrite, pos);
         }
     }
 }

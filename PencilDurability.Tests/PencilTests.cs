@@ -75,7 +75,7 @@ namespace PencilDurability.Tests
             pencil.Write("This is a new Test", sheet);
             Assert.AreEqual(84, pencil.Durability);
 
-            pencil.Overwrite("fun time", sheet, 10);
+            pencil.Write("fun time", sheet, 10);
             Assert.AreEqual(77, pencil.Durability);
         }
     }
