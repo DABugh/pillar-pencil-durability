@@ -81,7 +81,12 @@ namespace PencilDurability
         //Replace the last instance of textToErase with spaces of equal length
         public Paper Erase(string textToErase, Paper sheet)
         {
-            return sheet.Erase(textToErase);
+            if (Eraser > 0)
+            {
+                sheet.Erase(textToErase);
+            }
+
+            return sheet;
         }
 
         public void Sharpen()

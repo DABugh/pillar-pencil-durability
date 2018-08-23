@@ -184,5 +184,15 @@ namespace PencilDurability.Tests
 
             Assert.AreEqual(150, pencil.Eraser);
         }
+
+        [TestMethod]
+        public void WhenPencilEraserIsZeroAndItErases_PaperTextIsUnchanged()
+        {
+            pencil = new Pencil(defaultDurability, defaultLength, 0);
+            sheet = new Paper("Nothing ever changes");
+            
+            pencil.Erase("changes", sheet);
+            Assert.AreEqual("Nothing ever changes", sheet.Text);
+        }
     }
 }
