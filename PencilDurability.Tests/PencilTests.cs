@@ -19,6 +19,7 @@ namespace PencilDurability.Tests
             pencil = new Pencil(defaultDurability, defaultLength);
         }
 
+#region Point Degradation
 
         // POINT DEGRADATION
         //  As a pencil manufacturer
@@ -110,6 +111,9 @@ namespace PencilDurability.Tests
             Assert.AreEqual("A funny thing happened on the way to integration testing.", sheet.Text);
         }
 
+#endregion //Point Degradation
+
+#region Sharpen
 
         // SHARPEN
         // As a writer
@@ -160,6 +164,10 @@ namespace PencilDurability.Tests
             Assert.AreEqual(defaultDurability, pencil.Sharpness);
             Assert.AreEqual(-1, pencil.Length);
         }
+
+#endregion //Sharpen
+
+#region Eraser Degradation
 
         // ERASER DEGRADATION
         //  As a pencil manufacturer
@@ -230,5 +238,7 @@ namespace PencilDurability.Tests
 
         //TODO: Test that eraser does not drop below 0 and level up to become infinite
         //TODO: Test that infinite eraser erases infinitely
+
+#endregion //Eraser Degradation
     }
 }

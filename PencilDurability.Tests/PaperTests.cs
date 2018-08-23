@@ -9,6 +9,8 @@ namespace PencilDurability.Tests
     {
         private Paper sheet;
 
+#region Write
+
         // WRITE
         // As a writer
         //  I want to be able use a pencil to write text on a sheet of paper
@@ -44,6 +46,9 @@ namespace PencilDurability.Tests
             Assert.AreEqual(originalText + textToWrite, sheet.Text);
         }
 
+#endregion //Write
+
+#region Erase
 
         // ERASE
         // As a writer
@@ -75,6 +80,9 @@ namespace PencilDurability.Tests
             Assert.AreEqual(originalText, sheet.Text);
         }
 
+#endregion //Erase
+
+#region Edit
 
         // EDIT
         // As a writer
@@ -118,5 +126,7 @@ namespace PencilDurability.Tests
             //  real-world outcome. In a professional environment, requirement should be verified.
             Assert.AreEqual("It was the best of times, it was @@@e@l@@@@i@@ times.", sheet.Text);
         }
+
+#endregion //Edit
     }
 }
