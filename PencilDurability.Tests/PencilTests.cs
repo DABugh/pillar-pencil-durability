@@ -8,13 +8,12 @@ namespace PencilDurability.Tests
     public class PencilTests
     {
         private Pencil pencil;
-        private string sheet;
+        private Paper sheet;
 
         [TestInitialize()]
         public void Initialize()
         {
             pencil = new Pencil();
-            sheet = String.Empty;
         }
 
         // WRITE
@@ -26,9 +25,10 @@ namespace PencilDurability.Tests
         public void WhenPencilGivenBlankPaperAndTextToWrite_PaperContainsText()
         {
             string textToWrite = "It was the best of times";
+            sheet = new Paper();
 
-            sheet = pencil.Write(textToWrite, sheet);
-            Assert.AreEqual(textToWrite, sheet);
+            pencil.Write(textToWrite, sheet);
+            Assert.AreEqual(textToWrite, sheet.Text);
         }
 
         [TestMethod]
@@ -36,10 +36,10 @@ namespace PencilDurability.Tests
         {
             string originalText = "It was the best of times";
             string textToWrite = ", it was the blurst of times.";
-            sheet = originalText;
+            sheet = new Paper(originalText);
 
-            sheet = pencil.Write(textToWrite, sheet);
-            Assert.AreEqual(originalText + textToWrite, sheet);
+            pencil.Write(textToWrite, sheet);
+            Assert.AreEqual(originalText + textToWrite, sheet.Text);
         }
 
 
@@ -53,13 +53,13 @@ namespace PencilDurability.Tests
         {
             string originalText = "It was the best of times, it was the blurst of times.";
             string eraseText = "times";
-            sheet = originalText;
+            sheet = new Paper(originalText);
 
-            sheet = pencil.Erase(eraseText, sheet);
-            Assert.AreEqual("It was the best of times, it was the blurst of      .", sheet);
+            pencil.Erase(eraseText, sheet);
+            Assert.AreEqual("It was the best of times, it was the blurst of      .", sheet.Text);
 
-            sheet = pencil.Erase(eraseText, sheet);
-            Assert.AreEqual("It was the best of      , it was the blurst of      .", sheet);
+            pencil.Erase(eraseText, sheet);
+            Assert.AreEqual("It was the best of      , it was the blurst of      .", sheet.Text);
         }
         
         [TestMethod]
@@ -67,10 +67,10 @@ namespace PencilDurability.Tests
         {
             string originalText = "It was the best of times, it was the blurst of times.";
             string eraseText = "days";
-            sheet = originalText;
+            sheet = new Paper(originalText);
 
-            sheet = pencil.Erase(eraseText, sheet);
-            Assert.AreEqual(originalText, sheet);
+            pencil.Erase(eraseText, sheet);
+            Assert.AreEqual(originalText, sheet.Text);
         }
 
 
@@ -83,38 +83,38 @@ namespace PencilDurability.Tests
         public void WhenPencilGivenNonblankPaperAndTextToOverwriteAtPosition_PaperContainsOverwriteTextInsteadOfSpacesAtPosition()
         {
             string originalText = "It was the best of times,     it was the blurst of times.";
-            sheet = originalText;
+            sheet = new Paper(originalText);
             
             //Leave one space after comma, overwrite after that
-            sheet = pencil.Overwrite("but", sheet, 26);
+            pencil.Overwrite("but", sheet, 26);
 
-            Assert.AreEqual("It was the best of times, but it was the blurst of times.", sheet);
+            Assert.AreEqual("It was the best of times, but it was the blurst of times.", sheet.Text);
         }
 
         [TestMethod]
         public void WhenPencilGivenNonblankPaperAndTextToOverwriteAtPosition_PaperContainsCollisionsInsteadOfCharactersAtPosition()
         {
             string originalText = "It was the best of times, it was the blurst of times.";
-            sheet = originalText;
+            sheet = new Paper(originalText);
 
-            sheet = pencil.Overwrite("worst", sheet, 37);
+            pencil.Overwrite("worst", sheet, 37);
 
-            Assert.AreEqual("It was the best of times, it was the @@@@@t of times.", sheet);
+            Assert.AreEqual("It was the best of times, it was the @@@@@t of times.", sheet.Text);
         }
 
         [TestMethod]
         public void WhenPencilGivenNonblankPaperAndTextToOverwriteAtPosition_PaperContainsTextAndCollisions()
         {
             string originalText = "It was the best of times, it was the blurst of times.";
-            sheet = originalText;
+            sheet = new Paper(originalText);
 
-            sheet = pencil.Overwrite("super amazing", sheet, 33);
+            pencil.Overwrite("super amazing", sheet, 33);
 
             //Requirements state that writing a character over a space does not cause a collision,
             //  but do not specify expectations when writing a space over an existing character.
             //  This test assumes no collision (see 'l' in expected result), as that reflects
             //  real-world outcome. In a professional environment, requirement should be verified.
-            Assert.AreEqual("It was the best of times, it was @@@e@l@@@@i@@ times.", sheet);
+            Assert.AreEqual("It was the best of times, it was @@@e@l@@@@i@@ times.", sheet.Text);
         }
     }
 }
