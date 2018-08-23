@@ -160,5 +160,21 @@ namespace PencilDurability.Tests
             Assert.AreEqual(defaultDurability, pencil.Sharpness);
             Assert.AreEqual(-1, pencil.Length);
         }
+
+        // ERASER DEGRADATION
+        //  As a pencil manufacturer
+        //  I want a pencil eraser to eventually wear out
+        //  so that I can sell more pencils
+
+        // Instructions state: "When a pencil is created, it can be provided with a value for eraser durability."
+        //  This implies that it can also be created without a durability. Assuming infinite durability
+        //  until requirements are clarified.
+        [TestMethod]
+        public void WhenPencilCreatedWithoutEraserDurability_UseInfiniteDurability()
+        {
+            pencil = new Pencil();
+
+            Assert.AreEqual(-1, pencil.Eraser);
+        }
     }
 }

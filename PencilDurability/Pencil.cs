@@ -7,10 +7,12 @@ namespace PencilDurability
     {
         // Durability cannot be changed after pencil is created
         public int Durability { get; }
+        //Sharpness degrades from Durability to 0
         public int Sharpness { get; private set; }
         public int Length { get; private set; }
+        public int Eraser { get; private set; }
 
-        public Pencil(int dur = -1, int len = -1)
+        public Pencil(int dur = -1, int len = -1, int er = -1)
         {
             // If Durability not specified when Pencil created, assume infinite durability (verify requirements)
             Durability = dur;
@@ -19,6 +21,8 @@ namespace PencilDurability
             // Requirements state that length "should" be specified, so infinite length is probably outside the scope of requirements;
             //  Including it anyway for consistency... if durability is not specified, length probably won't be either.
             Length = len;
+            // Same as defaults above - if not specified, default to infinite eraser (verify requirements)
+            Eraser = er;
         }
 
         public Paper Write(string textToWrite, Paper sheet, int pos = -1)
