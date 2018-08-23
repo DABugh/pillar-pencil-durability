@@ -83,7 +83,7 @@ namespace PencilDurability
         {
             if (Eraser > 0)
             {
-                Eraser -= textToErase.Length;
+                Eraser -= textToErase.Replace(" ", String.Empty).Length;
                 sheet.Erase(textToErase);
             }
 
