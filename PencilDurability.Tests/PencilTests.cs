@@ -14,6 +14,7 @@ namespace PencilDurability.Tests
         public void Initialize()
         {
             sheet = new Paper();
+            pencil = new Pencil(100);
         }
 
 
@@ -44,8 +45,6 @@ namespace PencilDurability.Tests
         [TestMethod]
         public void WhenPencilWrites_ItLosesItsSharpness()
         {
-            pencil = new Pencil(100);
-            
             pencil.Write("test", sheet);
             Assert.AreEqual(96, pencil.Durability);
         }
@@ -53,8 +52,6 @@ namespace PencilDurability.Tests
         [TestMethod]
         public void WhenPencilWrites_ItDoesNotLoseItsSharpnessForSpaces()
         {
-            pencil = new Pencil(100);
-            
             pencil.Write("this is a test", sheet);
             Assert.AreEqual(89, pencil.Durability);
         }
@@ -62,8 +59,6 @@ namespace PencilDurability.Tests
         [TestMethod]
         public void WhenPencilWrites_ItLosesDoubleSharpnessForCapitalLetters()
         {
-            pencil = new Pencil(100);
-            
             pencil.Write("This is a Test", sheet);
             Assert.AreEqual(87, pencil.Durability);
         }
@@ -71,7 +66,6 @@ namespace PencilDurability.Tests
         [TestMethod]
         public void WhenPencilOverwrites_ItLosesSharpness()
         {
-            pencil = new Pencil(100);
             pencil.Write("This is a new Test", sheet);
             Assert.AreEqual(84, pencil.Durability);
 
