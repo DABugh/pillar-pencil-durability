@@ -222,19 +222,7 @@ namespace PencilDurability.Tests
             pencil.Erase("trying to change", sheet);
             Assert.AreEqual(136, pencil.Eraser);
         }
-        
-        [TestMethod]
-        public void WhenPencilErasesAndEraserIsLessTheNumberOfCharacters_SomeCharactersAreErasedAndOthersRemain()
-        {
-            pencil = new Pencil(defaultDurability, defaultLength, 5);
-            sheet = new Paper("Or if your ability to change degrades, and also something about hangers");
 
-            // This should also test that the correct substring is erased, and the search is not based on a
-            //  substring of the search term ("to change" is 8 characters, but we can only erase 5: "hange".
-            //  Pencil should still erase part of "to change" and not "hangers")
-            pencil.Erase("to change", sheet);
-            Assert.AreEqual("Or if your ability to c      degrades, and also something about hangers", sheet.Text);
-        }
 
         //TODO: Test that eraser does not drop below 0 and level up to become infinite
         //TODO: Test that infinite eraser erases infinitely

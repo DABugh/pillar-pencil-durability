@@ -78,6 +78,20 @@ namespace PencilDurability.Tests
 
             sheet.Erase(eraseText);
             Assert.AreEqual(originalText, sheet.Text);
+        }       
+
+        [TestMethod]
+        public void WhenNonblankPaperGivenTextToEraseAndLengthValueLessThanNumCharacters_SomeCharactersAreErasedAndOthersRemain()
+        {
+            string originalText = "It was the best of times, it was the blurst of times.";
+            string eraseText = "the best of";
+            sheet = new Paper(originalText);
+
+            // This should also test that the correct substring is erased, and the search is not based on a
+            //  substring of the search term ("the best of" is 9 characters, but we can only erase 4: "st of".
+            //  Pencil should still erase part of "the best of" and not "the blurst of")
+            sheet.Erase(eraseText, 4);
+            Assert.AreEqual("It was the be      times, it was the blurst of times.", sheet.Text);
         }
 
 #endregion //Erase
