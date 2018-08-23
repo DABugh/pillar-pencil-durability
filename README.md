@@ -1,20 +1,12 @@
 # Pencil Durability Kata
 
-This is a code sample written by Dainen Bugh, for submission to Pillar Technology, developed with C# using test-driven development. The requirements can be found at the following URL:
-
-```
-https://github.com/PillarTechnology/kata-pencil-durability
-```
+This is a code sample written by Dainen Bugh, for submission to Pillar Technology, developed with C# using test-driven development. The requirements can be found at https://github.com/PillarTechnology/kata-pencil-durability.
 
 ## Prerequisites
 
 ### Build: .NET Core
 
-This project was developed using .NET Core 2.1.302 in Visual Studio Code (VSCode) running on Windows 10. The only requirement to build is the .NET Core SDK, which may be found here:
-
-```
-https://www.microsoft.com/net/download
-```
+This project was developed using .NET Core 2.1.302 in Visual Studio Code (VSCode) running on Windows 10. The only requirement to build is the .NET Core SDK, which may be found [here](https://www.microsoft.com/net/download).
 
 ### Test: MSTest
 
@@ -28,11 +20,8 @@ If these are not already installed, they should download automatically when the 
 
 ### Repository: Git
 
-If git is not installed, it may be downloaded from the following URL:
+If git is not installed, it may be downloaded [here](https://git-scm.com/download/win)
 
-```
-https://git-scm.com/download/win
-```
 
 ## Obtaining the Source Code
 
@@ -67,6 +56,7 @@ To execute the automated unit tests, navigate to the .../pillar-pencil-durabilit
 ```
 dotnet test
 ```
+
 
 ## Contributors
 
