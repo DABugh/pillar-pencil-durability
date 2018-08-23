@@ -24,5 +24,13 @@ namespace PencilDurability.Tests
 
             Assert.AreEqual(-1, pencil.Durability);
         }
+
+        [TestMethod]
+        public void WhenPencilCreatedWithPointDurability_DurabilityIsSet()
+        {
+            pencil = new Pencil(100);
+
+            Assert.AreEqual(100, pencil.Durability);
+        }
     }
 }

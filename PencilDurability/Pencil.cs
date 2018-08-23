@@ -12,6 +12,11 @@ namespace PencilDurability
             Durability = -1;
         }
         
+        public Pencil(int dur)
+        {
+            Durability = dur;
+        }
+
         public Paper Write(string textToWrite, Paper sheet)
         {
             return sheet.Append(textToWrite);
