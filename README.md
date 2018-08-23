@@ -20,7 +20,7 @@ If these are not already installed, they should download automatically when the 
 
 ### Repository: Git
 
-If git is not installed, it may be downloaded [here](https://git-scm.com/download/win)
+If git is not installed, it may be downloaded [here](https://git-scm.com/download/win).
 
 
 ## Obtaining the Source Code
