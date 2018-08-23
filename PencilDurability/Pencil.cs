@@ -14,7 +14,10 @@ namespace PencilDurability
 
         public Paper Write(string textToWrite, Paper sheet)
         {
-            Durability -= textToWrite.Length;
+            //Inelegant, but succinct. .NET Framework has a Count() method, which does not exist in .NET Core
+            int numNonspaces = textToWrite.Replace(" ", String.Empty).Length;
+
+            Durability -= numNonspaces;
             return sheet.Append(textToWrite);
         }
 
