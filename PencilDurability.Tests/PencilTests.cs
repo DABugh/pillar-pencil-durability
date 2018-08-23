@@ -32,53 +32,53 @@ namespace PencilDurability.Tests
         {
             pencil = new Pencil();
 
-            Assert.AreEqual(-1, pencil.Durability);
+            Assert.AreEqual(-1, pencil.Sharpness);
         }
 
         [TestMethod]
-        public void WhenPencilCreatedWithPointDurability_DurabilityIsSet()
+        public void WhenPencilCreatedWithPointDurability_SharpnessIsSet()
         {
             pencil = new Pencil(100);
 
-            Assert.AreEqual(100, pencil.Durability);
+            Assert.AreEqual(100, pencil.Sharpness);
         }
 
         [TestMethod]
         public void WhenPencilWrites_ItLosesItsSharpness()
         {
             pencil.Write("test", sheet);
-            Assert.AreEqual(defaultDurability - 4, pencil.Durability);
+            Assert.AreEqual(defaultDurability - 4, pencil.Sharpness);
         }
 
         [TestMethod]
         public void WhenPencilWrites_ItDoesNotLoseItsSharpnessForSpaces()
         {
             pencil.Write("this is a test", sheet);
-            Assert.AreEqual(defaultDurability - 11, pencil.Durability);
+            Assert.AreEqual(defaultDurability - 11, pencil.Sharpness);
         }
 
         [TestMethod]
         public void WhenPencilWrites_ItDoesNotLoseItsSharpnessForNewlineCharacters()
         {
             pencil.Write("this is a test" + System.Environment.NewLine + "of newline characters", sheet);
-            Assert.AreEqual(defaultDurability - 30, pencil.Durability);
+            Assert.AreEqual(defaultDurability - 30, pencil.Sharpness);
         }
 
         [TestMethod]
         public void WhenPencilWrites_ItLosesDoubleSharpnessForCapitalLetters()
         {
             pencil.Write("This is a Test", sheet);
-            Assert.AreEqual(defaultDurability - 13, pencil.Durability);
+            Assert.AreEqual(defaultDurability - 13, pencil.Sharpness);
         }
 
         [TestMethod]
         public void WhenPencilOverwrites_ItLosesSharpness()
         {
             pencil.Write("This is a new Test", sheet);
-            Assert.AreEqual(defaultDurability - 16, pencil.Durability);
+            Assert.AreEqual(defaultDurability - 16, pencil.Sharpness);
 
             pencil.Write("fun time", sheet, 10);
-            Assert.AreEqual(defaultDurability - 16 - 7, pencil.Durability);
+            Assert.AreEqual(defaultDurability - 16 - 7, pencil.Sharpness);
         }
 
         [TestMethod]
@@ -87,7 +87,7 @@ namespace PencilDurability.Tests
             pencil = new Pencil(20);
 
             pencil.Write("A funny thing happened on the way to integration testing.", sheet);
-            Assert.AreEqual(0, pencil.Durability);
+            Assert.AreEqual(0, pencil.Sharpness);
         }
 
         [TestMethod]
@@ -105,8 +105,25 @@ namespace PencilDurability.Tests
             pencil = new Pencil(-1);
 
             pencil.Write("A funny thing happened on the way to integration testing.", sheet);
-            Assert.AreEqual(-1, pencil.Durability);
+            Assert.AreEqual(-1, pencil.Sharpness);
             Assert.AreEqual("A funny thing happened on the way to integration testing.", sheet.Text);
         }
+
+
+        // SHARPEN
+        // As a writer
+        // I want to be able to sharpen my pencil
+        // so that I can continue to write with it after it goes dull
+
+        [TestMethod]
+        public void WhenPencilIsSharpened_SharpnessReturnsToInitialDurability()
+        {
+            pencil.Write("Sharpness is getting reduced.", sheet);
+            Assert.AreEqual(defaultDurability - 27, pencil.Sharpness);
+
+            pencil.Sharpen();
+            Assert.AreEqual(defaultDurability, pencil.Sharpness);
+        }
+
     }
 }
