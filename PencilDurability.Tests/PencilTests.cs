@@ -32,5 +32,15 @@ namespace PencilDurability.Tests
 
             Assert.AreEqual(100, pencil.Durability);
         }
+
+        [TestMethod]
+        public void WhenPencilWrites_ItLosesItsSharpness()
+        {
+            pencil = new Pencil(100);
+            Paper sheet = new Paper();
+            
+            pencil.Write("test", sheet);
+            Assert.AreEqual(96, pencil.Durability);
+        }
     }
 }

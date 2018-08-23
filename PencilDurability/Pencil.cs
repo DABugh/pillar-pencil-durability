@@ -14,6 +14,7 @@ namespace PencilDurability
 
         public Paper Write(string textToWrite, Paper sheet)
         {
+            Durability -= textToWrite.Length;
             return sheet.Append(textToWrite);
         }
 
