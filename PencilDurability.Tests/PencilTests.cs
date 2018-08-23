@@ -58,6 +58,13 @@ namespace PencilDurability.Tests
         }
 
         [TestMethod]
+        public void WhenPencilWrites_ItDoesNotLoseItsSharpnessForNewlineCharacters()
+        {
+            pencil.Write("this is a test" + System.Environment.NewLine + "of newline characters", sheet);
+            Assert.AreEqual(defaultDurability - 30, pencil.Durability);
+        }
+
+        [TestMethod]
         public void WhenPencilWrites_ItLosesDoubleSharpnessForCapitalLetters()
         {
             pencil.Write("This is a Test", sheet);
