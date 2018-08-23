@@ -1,4 +1,5 @@
 using System;
+using System.Text;
 
 namespace PencilDurability
 {
@@ -14,22 +15,31 @@ namespace PencilDurability
 
         public Paper Write(string textToWrite, Paper sheet, int pos = -1)
         {
+            StringBuilder sbTextToWrite = new StringBuilder(textToWrite);
+
             for(int i=0; i<textToWrite.Length; i++)
             {
                 if (Durability == 0)
                 {
-                    break;
+                    sbTextToWrite[i] = ' ';
                 }
 
-                if (char.IsUpper(textToWrite[i]) && Durability >= 2)
+                if (char.IsUpper(sbTextToWrite[i]))
                 {
                     // Note: Requirements do not state what happens if Pencil attempts to write a capital letter with a sharpness of 1
                     //  In real-world circumstances, user would get half of a letter. One way to simulate this is converting the
                     //  capital to lower case. For now, capital letter will be skipped and sharpness will be left at 1, allowing a
                     //  lower-case to be written later. In professional situation, requirements should be clarified.
-                    Durability -= 2;
+                    if (Durability == 1)
+                    {
+                        sbTextToWrite[i] = ' ';
+                    }
+                    else
+                    {
+                        Durability -= 2;
+                    }
                 }
-                else if (char.IsWhiteSpace(textToWrite[i]))
+                else if (char.IsWhiteSpace(sbTextToWrite[i]))
                 {
                     //Do nothing
                 }
@@ -38,6 +48,8 @@ namespace PencilDurability
                     Durability--;
                 }
             }
+
+            textToWrite = sbTextToWrite.ToString();
             
             if (pos >= 0)
             {
