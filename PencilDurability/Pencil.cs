@@ -6,14 +6,9 @@ namespace PencilDurability
     {
         public int Durability { get; private set; }
 
-        public Pencil()
+        public Pencil(int dur = -1)
         {
             //If Durability not specified when Pencil created, assume infinite durability (verify requirements)
-            Durability = -1;
-        }
-        
-        public Pencil(int dur)
-        {
             Durability = dur;
         }
 
