@@ -176,5 +176,13 @@ namespace PencilDurability.Tests
 
             Assert.AreEqual(-1, pencil.Eraser);
         }
+
+        [TestMethod]
+        public void WhenPencilCreatedWithEraserDurability_EraserIsSet()
+        {
+            pencil = new Pencil(100, 5, 150);
+
+            Assert.AreEqual(150, pencil.Eraser);
+        }
     }
 }
