@@ -1,4 +1,5 @@
 using System;
+using System.Text;
 
 namespace PencilDurability
 {
@@ -24,13 +25,30 @@ namespace PencilDurability
         }
 
         //Replace the last instance of textToErase with spaces of equal length
-        public Paper Erase(string textToErase)
+        public Paper Erase(string textToErase, int charsToErase = -1)
         {
             int pos = Text.LastIndexOf(textToErase);
             if (pos >= 0)
             {
-                string replacementSpace = new String(' ', textToErase.Length);
-                Text = Text.Substring(0, pos) + replacementSpace + Text.Substring(pos + textToErase.Length);
+                string replacementText = String.Empty;
+                if (charsToErase < 0 || charsToErase >= textToErase.Length)
+                {
+                    replacementText = new String(' ', textToErase.Length);
+                }
+                else
+                {
+                    StringBuilder sbTextToErase = new StringBuilder(textToErase);
+                    for(int i=sbTextToErase.Length-1; i>=0; i--)
+                    {
+                        if (!char.IsWhiteSpace(sbTextToErase[i]) && charsToErase > 0)
+                        {
+                            sbTextToErase[i] = ' ';
+                            charsToErase--;
+                        }
+                    }
+                    replacementText = sbTextToErase.ToString();
+                }
+                Text = Text.Substring(0, pos) + replacementText + Text.Substring(pos + textToErase.Length);
             }
 
             return this;

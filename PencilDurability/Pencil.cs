@@ -78,13 +78,21 @@ namespace PencilDurability
             return sheet;
         }
 
-        //Replace the last instance of textToErase with spaces of equal length
         public Paper Erase(string textToErase, Paper sheet)
         {
             if (Eraser > 0)
             {
-                Eraser -= textToErase.Replace(" ", String.Empty).Length;
-                sheet.Erase(textToErase);
+                int charsToErase = textToErase.Replace(" ", String.Empty).Length;
+                if (charsToErase <= Eraser)
+                {
+                    Eraser -= charsToErase;
+                }
+                else
+                {
+                    charsToErase = Eraser;
+                    Eraser = 0;
+                }
+                sheet.Erase(textToErase, charsToErase);
             }
 
             return sheet;
