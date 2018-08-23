@@ -58,5 +58,14 @@ namespace PencilDurability.Tests
             pencil.Write("this is a test", sheet);
             Assert.AreEqual(89, pencil.Durability);
         }
+
+        [TestMethod]
+        public void WhenPencilWrites_ItLosesDoubleSharpnessForCapitalLetters()
+        {
+            pencil = new Pencil(100);
+            
+            pencil.Write("This is a Test", sheet);
+            Assert.AreEqual(87, pencil.Durability);
+        }
     }
 }
