@@ -9,7 +9,7 @@ namespace PencilDurability.Tests
     {
         private Paper sheet;
 
-#region Write
+        #region Write
 
         // WRITE
         // As a writer
@@ -46,9 +46,9 @@ namespace PencilDurability.Tests
             Assert.AreEqual(originalText + textToWrite, sheet.Text);
         }
 
-#endregion //Write
+        #endregion //Write
 
-#region Erase
+        #region Erase
 
         // ERASE
         // As a writer
@@ -68,7 +68,7 @@ namespace PencilDurability.Tests
             sheet.Erase(eraseText);
             Assert.AreEqual("It was the best of      , it was the blurst of      .", sheet.Text);
         }
-        
+
         [TestMethod]
         public void WhenNonblankPaperGivenTextToEraseWithNoMatch_PaperIsUnchanged()
         {
@@ -78,7 +78,7 @@ namespace PencilDurability.Tests
 
             sheet.Erase(eraseText);
             Assert.AreEqual(originalText, sheet.Text);
-        }       
+        }
 
         [TestMethod]
         public void WhenNonblankPaperGivenTextToEraseAndLengthValueLessThanNumCharacters_SomeCharactersAreErasedAndOthersRemain()
@@ -105,9 +105,9 @@ namespace PencilDurability.Tests
             Assert.AreEqual("It was the best of tim   " + System.Environment.NewLine + "       the blurst of times.", sheet.Text);
         }
 
-#endregion //Erase
+        #endregion //Erase
 
-#region Edit
+        #region Edit
 
         // EDIT
         // As a writer
@@ -119,7 +119,7 @@ namespace PencilDurability.Tests
         {
             string originalText = "It was the best of times,     it was the blurst of times.";
             sheet = new Paper(originalText);
-            
+
             //Leave one space after comma, overwrite after that
             sheet.Overwrite("but", 26);
 
@@ -152,6 +152,6 @@ namespace PencilDurability.Tests
             Assert.AreEqual("It was the best of times, it was @@@e@l@@@@i@@ times.", sheet.Text);
         }
 
-#endregion //Edit
+        #endregion //Edit
     }
 }
