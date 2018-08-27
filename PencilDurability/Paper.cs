@@ -56,15 +56,15 @@ namespace PencilDurability
             return this;
         }
 
-        public Paper Overwrite(string requestedText, int pos)
+        public Paper Overwrite(string requestedText, int position)
         {
             //TODO: Verify that [pos + requestedText.Length] does not exceed sheet.Length
             //  If so, must overwrite overlapping portions and append the rest
             //  If pos > sheet.Length, possibly pad with whitespace -- requirements should be clarified
             //  As currently written, this scenario will throw an exception
-              
+
             char[] requestedTextChars = requestedText.ToCharArray();
-            char[] oldTextChars = Text.Substring(pos, requestedText.Length).ToCharArray();
+            char[] oldTextChars = Text.Substring(position, requestedText.Length).ToCharArray();
             char[] newTextChars = new char[requestedText.Length];
 
             //TODO: This will treat newline characters as written characters, which will overwrite spaces and collide with
@@ -95,7 +95,7 @@ namespace PencilDurability
             }
 
             string newText = new String(newTextChars);
-            Text = Text.Substring(0, pos) + newText + Text.Substring(pos + requestedText.Length);
+            Text = Text.Substring(0, position) + newText + Text.Substring(position + requestedText.Length);
 
             return this;
         }

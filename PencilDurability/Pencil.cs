@@ -12,20 +12,20 @@ namespace PencilDurability
         public int Length { get; private set; }
         public int Eraser { get; private set; }
 
-        public Pencil(int dur = -1, int len = -1, int er = -1)
+        public Pencil(int initialDurability = -1, int initialLength = -1, int initialEraser = -1)
         {
             // If Durability not specified when Pencil created, assume infinite durability (verify requirements)
-            Durability = dur;
+            Durability = initialDurability;
             // Assume pencil comes sharpened
             Sharpness = Durability;
             // Requirements state that length "should" be specified, so infinite length is probably outside the scope of requirements;
             //  Including it anyway for consistency... if durability is not specified, length probably won't be either.
-            Length = len;
+            Length = initialLength;
             // Same as defaults above - if not specified, default to infinite eraser (verify requirements)
-            Eraser = er;
+            Eraser = initialEraser;
         }
 
-        public Paper Write(string textToWrite, Paper sheet, int pos = -1)
+        public Paper Write(string textToWrite, Paper sheet, int position = -1)
         {
             StringBuilder sbTextToWrite = new StringBuilder(textToWrite);
 
@@ -66,9 +66,9 @@ namespace PencilDurability
 
             textToWrite = sbTextToWrite.ToString();
 
-            if (pos >= 0)
+            if (position >= 0)
             {
-                sheet.Overwrite(textToWrite, pos);
+                sheet.Overwrite(textToWrite, position);
             }
             else
             {
