@@ -27,44 +27,7 @@ namespace PencilDurability
 
         public Paper Write(string textToWrite, Paper sheet, int position = -1)
         {
-            StringBuilder sbTextToWrite = new StringBuilder(textToWrite);
-
-            if (Sharpness >= 0)
-            {
-                for (int i = 0; i < textToWrite.Length; i++)
-                {
-                    if (Sharpness == 0)
-                    {
-                        sbTextToWrite[i] = ' ';
-                    }
-
-                    if (char.IsUpper(sbTextToWrite[i]))
-                    {
-                        // Note: Requirements do not state what happens if Pencil attempts to write a capital letter with a sharpness of 1
-                        //  In real-world circumstances, user would get half of a letter. One way to simulate this is converting the
-                        //  capital to lower case. For now, capital letter will be skipped and sharpness will be left at 1, allowing a
-                        //  lower-case to be written later. In professional situation, requirements should be clarified.
-                        if (Sharpness == 1)
-                        {
-                            sbTextToWrite[i] = ' ';
-                        }
-                        else
-                        {
-                            Sharpness -= 2;
-                        }
-                    }
-                    else if (char.IsWhiteSpace(sbTextToWrite[i]))
-                    {
-                        //Do nothing
-                    }
-                    else if (Sharpness >= 1)
-                    {
-                        Sharpness--;
-                    }
-                }
-            }
-
-            textToWrite = sbTextToWrite.ToString();
+            textToWrite = degradePencilTip(textToWrite);
 
             if (position >= 0)
             {
@@ -78,28 +41,46 @@ namespace PencilDurability
             return sheet;
         }
 
+        private string degradePencilTip(string textToWrite)
+        {
+            if (Sharpness == -1) return textToWrite;
+
+            StringBuilder sbTextToWrite = new StringBuilder(textToWrite);
+
+            for (int i = 0; i < textToWrite.Length; i++)
+            {
+                if (Sharpness == 0)
+                {
+                    sbTextToWrite[i] = ' ';
+                }
+
+                if (char.IsUpper(sbTextToWrite[i]))
+                {
+                    // Note: Requirements do not state what happens if Pencil attempts to write a capital letter with a sharpness of 1
+                    //  In real-world circumstances, user would get half of a letter. One way to simulate this is converting the
+                    //  capital to lower case. For now, capital letter will be skipped and sharpness will be left at 1, allowing a
+                    //  lower-case to be written later. In professional situation, requirements should be clarified.
+                    if (Sharpness == 1)
+                    {
+                        sbTextToWrite[i] = ' ';
+                    }
+                    else
+                    {
+                        Sharpness -= 2;
+                    }
+                }
+                else if (!char.IsWhiteSpace(sbTextToWrite[i]))
+                {
+                    Sharpness--;
+                }
+            }
+
+            return sbTextToWrite.ToString();
+        }
+
         public Paper Erase(string textToErase, Paper sheet)
         {
-            int charsToErase = 0;
-            //Num of chars to erase is Eraser value or num of written chars in string, whichever is less
-            if (Eraser > 0)
-            {
-                charsToErase = textToErase.Replace(" ", String.Empty).Length;
-                if (charsToErase <= Eraser)
-                {
-                    Eraser -= charsToErase;
-                }
-                else
-                {
-                    charsToErase = Eraser;
-                    Eraser = 0;
-                }
-            }
-            //Infinite eraser
-            else if (Eraser == -1)
-            {
-                charsToErase = -1;
-            }
+            int charsToErase = degradeEraser(textToErase);
 
             if (charsToErase != 0)
             {
@@ -109,14 +90,30 @@ namespace PencilDurability
             return sheet;
         }
 
+        private int degradeEraser(string textToErase)
+        {
+            int writtenCharacterCount = textToErase.Replace(" ", String.Empty).Length;
+            int charsToErase = Math.Min(writtenCharacterCount, Eraser);
+
+            if (Eraser != -1)
+            {
+                Eraser -= charsToErase;
+            }
+
+            return charsToErase;
+        }
+
         public void Sharpen()
         {
-            if (Length > 0 || Length == -1)
+            if (Length != 0)
             {
                 Sharpness = Durability;
-                if (Length > 0)
-                    //Assumes that sharpening an already-sharp pencil still reduces its length
-                    Length--;
+            }
+
+            if (Length > 0)
+            {
+                //Assumes requirement that sharpening an already-sharp pencil still reduces its length
+                Length--;
             }
         }
     }
