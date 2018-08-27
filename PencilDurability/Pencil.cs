@@ -115,8 +115,8 @@ namespace PencilDurability
             {
                 Sharpness = Durability;
                 if (Length > 0)
-                //Assumes that sharpening an already-sharp pencil still reduces its length
-                Length--;
+                    //Assumes that sharpening an already-sharp pencil still reduces its length
+                    Length--;
             }
         }
     }

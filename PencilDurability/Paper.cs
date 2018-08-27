@@ -5,7 +5,7 @@ namespace PencilDurability
 {
     public class Paper
     {
-        public string Text {get; private set;}
+        public string Text { get; private set; }
 
         public Paper()
         {
@@ -27,8 +27,8 @@ namespace PencilDurability
         //Replace the last instance of textToErase with spaces of equal length
         public Paper Erase(string textToErase, int charsToErase = -1)
         {
-            int pos = Text.LastIndexOf(textToErase);
-            if (pos >= 0)
+            int position = Text.LastIndexOf(textToErase);
+            if (position >= 0)
             {
                 string replacementText = String.Empty;
                 // Erase entire string
@@ -40,7 +40,7 @@ namespace PencilDurability
                 else
                 {
                     StringBuilder sbTextToErase = new StringBuilder(textToErase);
-                    for(int i=sbTextToErase.Length-1; i>=0; i--)
+                    for (int i = sbTextToErase.Length - 1; i >= 0; i--)
                     {
                         if (!char.IsWhiteSpace(sbTextToErase[i]) && charsToErase > 0)
                         {
@@ -50,7 +50,7 @@ namespace PencilDurability
                     }
                     replacementText = sbTextToErase.ToString();
                 }
-                Text = Text.Substring(0, pos) + replacementText + Text.Substring(pos + textToErase.Length);
+                Text = Text.Substring(0, position) + replacementText + Text.Substring(position + textToErase.Length);
             }
 
             return this;
@@ -70,7 +70,7 @@ namespace PencilDurability
             //TODO: This will treat newline characters as written characters, which will overwrite spaces and collide with
             //  other characters; to properly simulate paper, a newline must be retained in the overwriting text, but this would
             //  potentially break up words or otherwise alter the intent. Requirements must be clarified and a new test added.
-            for (int i=0; i<newTextChars.Length; i++)
+            for (int i = 0; i < newTextChars.Length; i++)
             {
                 //Overwrite space with space
                 if (requestedTextChars[i] == ' ' && oldTextChars[i] == ' ')
