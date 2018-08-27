@@ -83,7 +83,7 @@ namespace PencilDurability
             //  potentially break up words or otherwise alter the intent. Requirements must be clarified and a new test added.
             for (int i = 0; i < sbRequestedText.Length; i++)
             {
-                sbNewText[i] = determineOverwriteCharacter(sbOldText[i], sbRequestedText[i]);                
+                sbNewText[i] = determineOverwriteCharacter(sbOldText[i], sbRequestedText[i]);
             }
 
             return sbNewText.ToString();

@@ -11,15 +11,16 @@ namespace PencilDurability.Tests
         private Paper sheet;
         private int defaultDurability = 100;
         private int defaultLength = 2;
+        private int defaultEraser = 150;
 
         [TestInitialize()]
         public void Initialize()
         {
             sheet = new Paper();
-            pencil = new Pencil(defaultDurability, defaultLength);
+            pencil = new Pencil(defaultDurability, defaultLength, defaultEraser);
         }
 
-#region Point Degradation
+        #region Point Degradation
 
         // POINT DEGRADATION
         //  As a pencil manufacturer
@@ -111,9 +112,9 @@ namespace PencilDurability.Tests
             Assert.AreEqual("A funny thing happened on the way to integration testing.", sheet.Text);
         }
 
-#endregion //Point Degradation
+        #endregion //Point Degradation
 
-#region Sharpen
+        #region Sharpen
 
         // SHARPEN
         // As a writer
@@ -145,8 +146,8 @@ namespace PencilDurability.Tests
         [TestMethod]
         public void WhenPencilLengthIsZeroAndIsSharpened_PencilSharpnessAndLengthRemainUnchanged()
         {
-            pencil = new Pencil(100, 0);
-            
+            pencil = new Pencil(defaultDurability, 0);
+
             pencil.Write("Sharpness is in the eye of the beholder.", sheet);
             pencil.Sharpen();
             Assert.AreEqual(defaultDurability - 34, pencil.Sharpness);
@@ -157,7 +158,7 @@ namespace PencilDurability.Tests
         public void WhenPencilHasLengthOfNegativeOneAndIsSharpened_PencilIsSharpenedAndLengthRemainsNegativeOne()
         {
             pencil = new Pencil(defaultDurability, -1);
-            
+
             pencil.Write("Sharpness is in the eye of the beholder.", sheet);
             Assert.AreEqual(defaultDurability - 34, pencil.Sharpness);
             pencil.Sharpen();
@@ -165,9 +166,9 @@ namespace PencilDurability.Tests
             Assert.AreEqual(-1, pencil.Length);
         }
 
-#endregion //Sharpen
+        #endregion //Sharpen
 
-#region Eraser Degradation
+        #region Eraser Degradation
 
         // ERASER DEGRADATION
         //  As a pencil manufacturer
@@ -188,9 +189,9 @@ namespace PencilDurability.Tests
         [TestMethod]
         public void WhenPencilCreatedWithEraserDurability_EraserIsSet()
         {
-            pencil = new Pencil(100, 5, 150);
+            pencil = new Pencil(defaultDurability, defaultLength, defaultEraser);
 
-            Assert.AreEqual(150, pencil.Eraser);
+            Assert.AreEqual(defaultEraser, pencil.Eraser);
         }
 
         [TestMethod]
@@ -198,7 +199,7 @@ namespace PencilDurability.Tests
         {
             pencil = new Pencil(defaultDurability, defaultLength, 0);
             sheet = new Paper("Nothing ever changes");
-            
+
             pencil.Erase("changes", sheet);
             Assert.AreEqual("Nothing ever changes", sheet.Text);
         }
@@ -206,24 +207,24 @@ namespace PencilDurability.Tests
         [TestMethod]
         public void WhenPencilErases_EraserIsReducedByNumOfNonwhitespaceCharacters()
         {
-            pencil = new Pencil(defaultDurability, defaultLength, 150);
+            pencil = new Pencil(defaultDurability, defaultLength, defaultEraser);
             sheet = new Paper("Except when they do");
 
             pencil.Erase("when", sheet);
-            Assert.AreEqual(146, pencil.Eraser);
+            Assert.AreEqual(defaultEraser - 4, pencil.Eraser);
         }
 
         [TestMethod]
         public void WhenPencilErases_EraserIsNotReducedByWhitespaceCharacters()
         {
-            pencil = new Pencil(defaultDurability, defaultLength, 150);
+            pencil = new Pencil(defaultDurability, defaultLength, defaultEraser);
             sheet = new Paper("Unless you are trying to change nothing");
 
             pencil.Erase("trying to change", sheet);
-            Assert.AreEqual(136, pencil.Eraser);
+            Assert.AreEqual(defaultEraser - 14, pencil.Eraser);
         }
 
-        
+
         [TestMethod]
         public void WhenPencilErasesAndEraserIsLessThanNumberOfCharacters_EraserIsZero()
         {
@@ -243,12 +244,12 @@ namespace PencilDurability.Tests
         {
             pencil = new Pencil(defaultDurability, defaultLength, -1);
             sheet = new Paper("And then there's magic to defy the laws of thermodynamics");
-            
+
             pencil.Erase("the laws of", sheet);
             Assert.AreEqual("And then there's magic to defy             thermodynamics", sheet.Text);
             Assert.AreEqual(-1, pencil.Eraser);
         }
 
-#endregion //Eraser Degradation
+        #endregion //Eraser Degradation
     }
 }
