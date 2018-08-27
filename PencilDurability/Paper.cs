@@ -28,32 +28,34 @@ namespace PencilDurability
         public Paper Erase(string textToErase, int charsToErase = -1)
         {
             int position = Text.LastIndexOf(textToErase);
-            if (position >= 0)
-            {
-                string replacementText = String.Empty;
-                // Erase entire string
-                if (charsToErase < 0 || charsToErase >= textToErase.Length)
-                {
-                    replacementText = new String(' ', textToErase.Length);
-                }
-                // Else, erase one non-whitespace character at a time
-                else
-                {
-                    StringBuilder sbTextToErase = new StringBuilder(textToErase);
-                    for (int i = sbTextToErase.Length - 1; i >= 0; i--)
-                    {
-                        if (!char.IsWhiteSpace(sbTextToErase[i]) && charsToErase > 0)
-                        {
-                            sbTextToErase[i] = ' ';
-                            charsToErase--;
-                        }
-                    }
-                    replacementText = sbTextToErase.ToString();
-                }
-                Text = Text.Substring(0, position) + replacementText + Text.Substring(position + textToErase.Length);
-            }
+
+            if (position < 0) return this;
+
+            string replacementText = buildEraseText(textToErase, charsToErase);
+
+            replaceText(position, replacementText);
 
             return this;
+        }
+
+        private string buildEraseText(string textToErase, int charsToErase)
+        {
+            // Eraser is either long enough or infinite
+            if (charsToErase >= textToErase.Length || charsToErase < 0)
+            {
+                return new String(' ', textToErase.Length);
+            }
+
+            StringBuilder sbTextToErase = new StringBuilder(textToErase);
+            for (int i = sbTextToErase.Length - 1; i >= 0; i--)
+            {
+                if (!char.IsWhiteSpace(sbTextToErase[i]) && charsToErase > 0)
+                {
+                    sbTextToErase[i] = ' ';
+                    charsToErase--;
+                }
+            }
+            return sbTextToErase.ToString();
         }
 
         public Paper Overwrite(string requestedText, int position)
@@ -63,41 +65,49 @@ namespace PencilDurability
             //  If pos > sheet.Length, possibly pad with whitespace -- requirements should be clarified
             //  As currently written, this scenario will throw an exception
 
-            char[] requestedTextChars = requestedText.ToCharArray();
-            char[] oldTextChars = Text.Substring(position, requestedText.Length).ToCharArray();
-            char[] newTextChars = new char[requestedText.Length];
+            string replacementText = buildOverwriteText(requestedText, position);
+
+            replaceText(position, replacementText);
+
+            return this;
+        }
+
+        private string buildOverwriteText(string requestedText, int position)
+        {
+            StringBuilder sbRequestedText = new StringBuilder(requestedText);
+            StringBuilder sbOldText = new StringBuilder(Text.Substring(position, requestedText.Length));
+            StringBuilder sbNewText = new StringBuilder(requestedText);
 
             //TODO: This will treat newline characters as written characters, which will overwrite spaces and collide with
             //  other characters; to properly simulate paper, a newline must be retained in the overwriting text, but this would
             //  potentially break up words or otherwise alter the intent. Requirements must be clarified and a new test added.
-            for (int i = 0; i < newTextChars.Length; i++)
+            for (int i = 0; i < sbRequestedText.Length; i++)
             {
-                //Overwrite space with space
-                if (requestedTextChars[i] == ' ' && oldTextChars[i] == ' ')
-                {
-                    newTextChars[i] = ' ';
-                }
-                //Space does not overwrite character
-                else if (requestedTextChars[i] == ' ' && oldTextChars[i] != ' ')
-                {
-                    newTextChars[i] = oldTextChars[i];
-                }
-                //Overwrite space with character
-                else if (requestedTextChars[i] != ' ' && oldTextChars[i] == ' ')
-                {
-                    newTextChars[i] = requestedTextChars[i];
-                }
-                //Overwrite character with character: output is gibberish
-                else if (requestedTextChars[i] != ' ' && oldTextChars[i] != ' ')
-                {
-                    newTextChars[i] = '@';
-                }
+                sbNewText[i] = determineOverwriteCharacter(sbOldText[i], sbRequestedText[i]);                
             }
 
-            string newText = new String(newTextChars);
-            Text = Text.Substring(0, position) + newText + Text.Substring(position + requestedText.Length);
+            return sbNewText.ToString();
+        }
 
-            return this;
+        private static char determineOverwriteCharacter(char oldChar, char requestedChar)
+        {
+            if (requestedChar == ' ')
+            {
+                return oldChar;
+            }
+            else if (oldChar == ' ')
+            {
+                return requestedChar;
+            }
+            else
+            {
+                return '@';
+            }
+        }
+
+        private void replaceText(int position, string newText)
+        {
+            Text = Text.Substring(0, position) + newText + Text.Substring(position + newText.Length);
         }
     }
 }
